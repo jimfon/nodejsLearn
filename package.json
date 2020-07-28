@@ -1,0 +1,28 @@
+{
+  "name": "tp",
+  "version": "1.0.1",
+  "description": "Practice self learn fast. ",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:G33kLabs/node-tts-speak.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "server",
+    "client",
+    "multi-threads"
+  ],
+  "author": "zorrow2017",
+  "since": "Mon Jul 27 21:54:08 2020",
+  "license": "ISC"
+}
