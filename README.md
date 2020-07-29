@@ -1,3 +1,16 @@
+!!!
+
+JUST try github and git! 
+DO NOT download it!
+
+!!!
+
+
+
+
+
+
+
 # tts-speak
 
 A standard Text To Speech wrapper with multiple providers support.
