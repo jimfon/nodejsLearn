@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Digital Huarong Road</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="../assets/js/jquery-3.3.1.js"></script>
+<!--        <script src="../assets/js/jquery.easyui.min.js"></script>-->
+        <style type="text/css">
+            #arr{
+                width: 50%;
+            }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script>
+            var maxl=10;    //最大10阶（maxl*maxl）；
+            var jie=3;
+            
+            function newGame(){
+                //把 <input> 的合法初始值写入 <table> ；
+                var arr,s;    //s="6,4,5,3,0,1,7,8,2"; 
+                arr=document.getElementById('arr').value;
+                s=arr.split(',');
+                if (s.length<=1)
+                    s=arr.split(' ');
+                arr=[];
+                //下面，字符串s 转数组arr ；
+                var i=0,x,j,len=0;    //i，j是循环控制变量，x是临时变量；
+                for (i;i<s.length;i++){
+                    x=parseInt(s[i]);
+                    if (isNaN(x) || x<0){
+                        continue;
+                    }
+                    for (j=0;j<len;j++){
+                        if (x==arr[j]){
+                            x=-1;
+                            break;
+                        }
+                    }
+                    if (x==-1)
+                        continue;
+                    arr[len]=x;
+                    len++;
+                }
+                //下面，构造初始方阵；
+                x=arr.length;    //x客串数组长；i客串循环控制变量；
+                if (x<4){
+                    alert("too short, so reject! ");
+                    return ;
+                }
+                for (i=2;i<maxl+2;i++){
+                    if (i*i>x)
+                        break;
+                }
+                x=i-1;    //x客串方阵阶数；
+                if (x>maxl){
+                    alert('only use 10x10. ');
+                    x=maxl;
+                }
+                j=0;    //j客串flag，判断数组是否有0，0即空格；
+                s=[];
+                for (i=0;i<x*x;i++){
+                    if (arr[i]===0)
+                        j=1;
+                    s[i]=arr[i];
+                }
+                if (j===0)
+                    s[x*x-1]=0;
+                //下面，把方阵写入 <table> ；
+                jie=x;
+                init(s);
+            }
+            function init(arr){
+                var $j=$('#jgbm');
+                $j.empty();//css('border',1);//wrap("<div id='jgbmdiv'></div>");
+                var i,j;
+                var $tr,$td,$b;
+                for (i=0;i<jie;i++){
+                    $tr=$("<tr></tr>");
+                    $('#jgbm').append($tr);
+                    for (j=0;j<jie;j++){
+                        $td=$("<td></td>");
+                        $tr.append($td);
+                        $b=$("<input type='button'/>");
+                        $td.append($b);
+                        $b.attr({id:i*jie+j,value:arr[i*jie+j],onclick:'move('+i+','+j+');'});
+                        $b.css({width:'100px',height:'100px','font-size':'30px','background-color':'#00ff00'});
+                    }
+                }
+                $("[value=0]").css('background-color','#fff');
+            }
+            function move(i,j){
+                function m(){
+                    $("[value=0]").css('background-color','#00ff00');
+                    aim.value=td.value;
+                    td.value='0';
+                    $("[value=0]").css('background-color','#fff');
+                }
+                var k=jie;
+                var td=document.getElementById(''+(i*k+j));
+                var aim;
+                if (i!=0){
+                    aim=document.getElementById(i*k-k+j);
+                    if (aim.value=='0'){
+                        m();
+                        return ;
+                    }
+                }
+                if (j!=0){
+                    aim=document.getElementById(i*k+j-1);
+                    if (aim.value=='0'){
+                        m();
+                        return ;
+                    }
+                }
+                if (i!=k-1){
+                    aim=document.getElementById(i*k+k+j);
+                    if (aim.value=='0'){
+                        m();
+                        return ;
+                    }
+                }
+                if (j!=k-1){
+                    aim=document.getElementById(i*k+j+1);
+                    if (aim.value=='0'){
+                        m();
+                        return ;
+                    }
+                }
+            }
+            
+            
+            //document.onload(); 
+            $(function(){ 
+                init([6,4,5,3,0,1,7,8,2]);
+                $('#eui').combobox({
+                    valueField:'id'
+                });
+            });
+        </script>
+        
+        <input id="arr" placeholder=""/>
+        <input type="button" value="restart" onclick="newGame();"/><br><br>
+        <table id="jgbm">
+            <tr><td>请打开JavaScript</td></tr>
+        </table>
+        
+        <div class="easyui-dialog" style="width:400px;height:200px"
+    data-options="
+        title:'My Dialog',
+        iconCls:'icon-ok',
+        onOpen:function(){}">
+    dialog content.
+            
+        </div>
+        <input id="eui"/>
+        
+    </body>
+</html>

@@ -1,190 +1,109 @@
-!!!
-
-JUST try github and git! 
-DO NOT download it!
-
-!!!
+tp
+============
+a small original basic https website, using node.js. 
 
 
+File structure
+------------
+
+#### tp
+>src/
+>>main/
+>>>nodejs/
+>>>>com/fengmu/tp/(empty)
+>>>>com.fengmu.tp/
+>>>>>requireVar.js
+>>>>>server.js
+>>>>>(3 unused files)
+>>>resources/
+>>>>CA/
+>>>>>(ssl key files for https)
+>>>>fileSave/
+>>>>>(temp files)
+>>>>mysql/(empty)
+>>>webapp/(redirect to down 15th line)
+>>test/
+>>>nodejs/
+>>>>com/fengmu/tp/(empty)
+>>>>com.fengmu.tp/
+>>>>>test.js
+>>>selenium/
+>target/(empty)
+>.gitignore
+>README.md
+>package.json
+>package-lock.json
+
+##### webapp
+>META-INF
+>>context.xml
+>WEB-INF
+>>web.xml
+>static
+>>assets
+>>>css
+>>>>allPage.css
+>>>etc
+>>>js
+>>>>fileup.js
+>>>>jquery-3.3.1.js
+>>>multimedia
+>>>picture
+>>>>jd.ico
+>>>>(other 3 pictures)
+>>>text
+>>microchat/(empty)
+>>tool
+>>>fileup.html
+>>>remove.html
+>>>yylj.html
+>index.html
+
+#### Introduction
+only one used page: https://127.0.0.1:4436/tp/fileup
+all servers at one nodejs: server.js 
+allPage.css and fileup.js support fileup.html; 
+requireVar.js, server.key, server.crt support server.js;
+all other files are useless! 
+This node.js project structure references maven, you may find a folder named "nbproject" because the IDE to edit this project is netbeans8.2; 
+
+#### License:  tp  v1.0.2  since 2020/07/27  by zorrow2017  in cn
 
 
 
+Usage
+------------
+
+#### to run: 
+download all "dependencies" in package.json (but in v1.0.2, just this version, you need not download any module *^__^*)
+change `absPath` in file requireVar.js(line: 31)
+run server.js, you may cd and enter "node server.js" in Windows cmd
+go to https://127.0.0.1:4436/tp/fileup in your browser
+
+#### to develop: 
+folder "target" and "src/test" just inherit from maven;
+file "package.json" "package-lock.json" ".gitignore" "README.md" inherit from git; 
+node.js file are saved at "src/main/nodejs/com.fengmu.tp/": 
+>>requireVar.js defines modules to import(require), likes stdfix.h in c/c++
+>>mytool.js defines basic functions, objects, variables,,,
+>>server.js get all httpRequest, deal(control), and send httpResponse; 
+"resources" save many different files
+>>CA, generated ssl files. read server.wincmd to learn, search Internet to learn more; 
+static web resources are saved at "src/main/webapp/static/": 
+>>"../index.html" home page
+>>"tool" many useful small tools writed by pure html5+css3+js(not node.js)
+>>>"fileup.html" to upload and download file
+>>>"remove.html" a game, click number block near 0 block to let the numbers look ordered in some way
+>>>"yylj.html" waiting for your efforts
+>>"microchat" waiting for your efforts
+>>"assets" save css, js, text, image, mp3, mp4, etc files which will be used by *.html
 
 
-# tts-speak
 
-A standard Text To Speech wrapper with multiple providers support.
+Author story
+------------
 
-Once the sound file is generated, find an installed audio player and play the sound.
-
-## Features
-
-- One wrapper for all tts providers (ideal for testing)
-- Multiplatform Audio Playing (use package ['speaker'](https://github.com/TooTallNate/node-speaker) for that) 
-- Thanks to ['jkeylu/node-mpg123-util'](https://github.com/jkeylu/node-mpg123-util) for the speaker volume !
-- Cache generated audio files (and protect your ratio against limitation for online providers)
-- Multilingual
-
-## Installation
-
-```
-npm install --save tts-speak
-```
-
-## TTS Providers
-
-You can use one of those providers to generate audio files from your text :
-
-- tts.js : A local tts engine, that is not perfect but which support many languages
-- api.voicerss.org : An API required service with beautiful voices and a large language support
-- google : Use the well known translate_tts service from google
-
-
-Example code :
-
-```
-// Create the wrapper with "tts.js" provider with full options
-var Speak = require('tts-speak');
-var speak = new Speak({
-    tts: {
-        engine: 'tts',                  // The engine to use for tts
-        lang: 'en-us',                  // The voice to use
-        amplitude: 100,                 // Amplitude from 0 to 200
-        wordgap: 0,                     // Gap between each word
-        pitch: 50,                      // Voice pitch
-        speed: 60,                      // Speed in %
-        cache: __dirname + '/cache',    // The cache directory were audio files will be stored
-        loglevel: 0,                    // TTS log level (0: trace -> 5: fatal)
-        delayAfter: 700                 // Mark a delay (ms) after each message
-    },
-    speak: {
-        volume: 80,                     // Audio player volume
-        loglevel: 0                     // Audio player log level
-    },
-    loglevel: 0                         // Wrapper log level
-});
-```
-
-### api.voicerss.org
-
-To use this provider, you have to request an API key by registering on [http://www.voicerss.org/api/demo.aspx](http://www.voicerss.org/api/demo.aspx)
-
-Example code :
-
-```
-// Create the wrapper with "voicerss" provider with full options
-var Speak = require('tts-speak');
-var speak = new Speak({
-    tts: {  
-        engine: {                       // The engine to use for tts
-            name: 'voicerss',           
-            key: 'XXXXXXXXXXXXXXX',     // The API key to use
-        },
-        lang: 'en-us',                  // The voice to use
-        speed: 60,                      // Speed in %
-        format: 'mp3',                  // Output audio format
-        quality: '44khz_16bit_stereo',  // Output quality
-        cache: __dirname + '/cache',    // The cache directory were audio files will be stored
-        loglevel: 0,                    // TTS log level (0: trace -> 5: fatal)
-        delayAfter: 0                   // Mark a delay (ms) after each message
-    },
-    speak: {
-        volume: 80,                     // Audio player volume
-        loglevel: 0                     // Audio player log level
-    },
-    loglevel: 0                         // Wrapper log level
-});
-```
-
-### Google
-
-```
-// Create the wrapper with "google" provider with full options
-var Speak = require('tts-speak');
-var speak = new Speak({
-    tts: {
-        engine: 'google',               // The engine to use for tts
-        lang: 'en-us',                  // The voice to use
-        cache: __dirname + '/cache',    // The cache directory were audio files will be stored
-        loglevel: 0,                    // TTS log level (0: trace -> 5: fatal)
-        delayAfter: 500                 // Mark a delay (ms) after each message
-    },
-    speak: {
-        volume: 80,                     // Audio player volume
-        loglevel: 0                     // Audio player log level
-    },
-    loglevel: 0                         // Wrapper log level
-});
-```
-
-
-## Usage
-
-Once the speak instance is ready, you can generate and play tts.
-
-```
-speak.once('ready', function() {
-
-    // Chaining
-    speak
-        .say("Hello and welcome here !")
-        .wait(1000)
-        .say({
-            src: 'Parlez-vous français ?',
-            lang: 'fr-fr',
-            speed: 30
-        });
-
-    // Catch when all queue is complete
-    speak.once('idle', function() {
-        speak.say("Of course, with my new text to speech wrapper !");
-    });
-
-    // Will stop and clean all the queue
-    setTimeout(function() {
-        speak.stop();
-        speak.say('Ok, abort the last queue !')
-    }, 1000);
-
-});
-```
-
-## Chainable Methods
-
-### `speak.say(obj)`
-
-`obj` can be a string or an object that is able to override default config.
-
-### `speak.wait(ms)`
-
-`ms` indicates the time in milliseconds to wait before continue.
-
-### `speak.stop()`
-
-Clean the queue and kill audio player if playing.
-
-
-## Events (`on` or `once`)
-
-### `speak.on('ready', fn)`
-
-When all interfaces are ready.
-
-### `speak.on('idle', fn)`
-
-When queue is complete after a job.
-
-### `speak.on('play', fn)`
-
-When a sound file is played.
-
-### `speak.on('pause', fn)`
-
-When a pause is marked.
-
-### `speak.on('stop', fn)`
-
-When all jobs are canceled.
-
+I'm learning git, nodejs, npm, maven, and will learn sass, less, veu, rect to improve myself and hunt for a good job.
+Study and writing and devoting can be the most precious pleasure in our life. 
 
 

@@ -1,0 +1,43 @@
+D:>openssl genrsa -out server.key 1024
+Generating RSA private key, 1024 bit long modulus (2 primes)
+................+++++
+....+++++
+e is 65537 (0x010001)
+
+D:>openssl rsa -in server.key -pubout -out server.pem
+writing RSA key
+
+D:>openssl req -new -key -in server.key -out server.csr
+req: Use -help for summary.
+
+D:>openssl req -new -key server.key -out server.csr
+Can't open C:\ci\openssl_1542740237450\_h_env\Library/openssl.cnf for reading, No such file or directory
+--So you need a file likes openssl.cnf
+
+D:>openssl req -new -nodes -key server.key -out server.csr -config openssl.cnf
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) []:cn
+State or Province Name (full name) []:guangdong
+Locality Name (eg, city) []:shenzhen
+Organization Name (eg, company) []:fengmu
+Organizational Unit Name (eg, section) []:tp
+Common Name (eg. YOUR name) []:zorrow2017
+Email Address []:fff@163.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:1234
+An optional company name []:fengmu
+
+D:>openssl x509 -req -in server.csr -signkey server.key -out server.crt
+Signature ok
+subject=C = cn, ST = guangdong, L = shenzhen, O = fengmu, OU = tp, CN = zorrow2017, emailAddress = fff@163.com
+Getting Private key
+
+D:>

@@ -1,8 +1,8 @@
 {
   "name": "tp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Practice self learn fast. ",
-  "main": "index.js",
+  "main": "./src/main/nodejs/com.fengmu.tp/index.js",
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
@@ -12,7 +12,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git@github.com:G33kLabs/node-tts-speak.git"
+    "url": "git@github.com:Zorrow2017/nodejsLearn.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

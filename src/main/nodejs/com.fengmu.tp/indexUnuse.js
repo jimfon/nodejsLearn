@@ -1,5 +1,13 @@
 'use strict';
-/* globals _: true */
+
+var Core = function(){
+    return Math.PI;
+};
+console.log('number: ',4399);
+
+
+
+/* globals _: true 
 var fs = require('fs-extra'),
     Logger = require('g33k-logger'),
     util = require('util'),
@@ -63,7 +71,7 @@ var Core = function(options) {
 
 /**
  * Inherits from EventEmitter.
- */
+ *
 util.inherits(Core, EventEmitter);
 
 // Say routine

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>fileup</title>
+    <link rel="icon" href="../assets/picture/jd.ico" type="image/x-icon" />
+    <link rel="icon" href="../assets/picture/jd.ico" mce_href="../assets/picture/jd.ico" type="image/x-icon" />
+    <script type="text/javascript" src="../assets/js/fileup.js"></script>
+    <link rel="stylesheet" href="../assets/css/allPage.css" type="text/css"/>
+</head>
+<body onload="init()">
+    <header>
+        <label>hw</label>
+        <section>this is fileup</section>
+    </header>
+    
+    <main>
+    <section id="file_advertise">
+        <h3 hidden>advertise</h3>
+        ad<br>
+        scan this and pay to inprove to vip<br>
+        jpg ercode
+    </section>
+    <article id="file_up">
+        <h3>to upload file</h3>
+        <form action="/tp/doFileup" method="post" enctype="multipart/form-data">
+            your name: <input name="usn" oninput="isNotAscii(this)" maxlength="16" size="40" required 
+                              title="name should not longer than 16!" /> !your name should between 2 and 16 litters; <br>
+            <label title="tips"></label><br>
+            choose a file: <input name="filedata" type="file" required/><br>
+            you'd better try a text file encoding with utf-8 first. <br>
+            <input type="submit" value="ok"/><br>
+        </form>
+    </article>
+    
+    <article id="file_get">
+        <h3>to get file</h3>
+        ? no such 
+        <form action="" method="get">
+            file name: <input name="filename" size="80"/> (e.g. help.txt)<br>
+            <input type="submit" value="search and download"/><br>
+        </form>
+    </article>
+    </main>
+    
+    <footer>
+        <span class="show_time">time</span>
+        <span class="show_end">end</span>
+    </footer>
+
+
+
+</body>
+</html>
