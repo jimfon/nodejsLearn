@@ -123,5 +123,6 @@ Author story
 
 I'm learning git, nodejs, npm, maven, and will learn sass, less, veu, rect to improve myself and hunt for a good job. <br>
 Study and writing and devoting can be the most precious pleasure in our life. <br>
+# Both jinfon and zorrow2017 are my(jim von) account in github.  
 
 
