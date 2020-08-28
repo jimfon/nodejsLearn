@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--
+@since Mon Aug 24 2020 22:25:19 GMT+0800
+@author zorrow2017
+@ref https://github.com/jimfon/nodejsLearn
+@description pure-html5+es6+css3-notepad-release-VERSION1.0.0
+@problem this page costs more than 30%CPU when it running; terrible!!!
+-->
+<html>
+    <head>
+        <title>MyNote</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            var gl = 80;
+            var curdiv; //the id of current Element[class=text-div] 
+            var divid = 1, idpre = 'div_'; //id rule: div_1,div_2,div_18,div_1001,,
+            var distance = 50; //default 50px
+            function init() {
+                var main = document.getElementsByTagName('main')[0];
+                var movediv = document.getElementsByClassName('move-div')[0];
+                movediv.ondblclick = (e) => {
+                    e.stopPropagation();
+                };
+                main.ondragenter = ((e) => {
+                    e.preventDefault();
+                });
+                main.ondragover = ((e) => {
+                    e.preventDefault();
+                });
+                main.ondrop = ((e) => {
+                    e.preventDefault();
+                });
+                main.ondblclick = (event) => {
+                    createDiv(main, event.pageX, event.pageY);
+                };
+            }
+            function createDiv(elem, px, py, innerText=0) {
+                var div = document.createElement('div');
+                div.setAttribute('id', idpre + (divid++));
+                div.setAttribute('class', 'text-div');
+                //div.setAttribute('style',`{top:${py},left:${px}`);
+                div.style.top = (String(py).endsWith('px'))?py:(py+ 'px');
+                div.style['left'] = (String(px).endsWith('px'))?px:(px + 'px');
+                div.setAttribute('placeholder', 'wssss');
+                div.setAttribute('dragging', false);
+                div.setAttribute('contenteditable', 'true');
+                //div.setAttribute('draggable','true');
+                var drag = createDragDiv(div);
+                div.appendChild(drag);
+                div.onfocus = (event) => {
+                    curdiv = div.id;
+                    var drags = div.getElementsByClassName('text-div-drag');
+                    if (drags.length === 0) {
+                        div.appendChild(createDragDiv(div));
+                    } else if (drags.length === 1) {
+                        drags[0].hidden = false;
+                    }
+                };
+                div.onblur = (e) => {
+                    var drag = div.getElementsByClassName('text-div-drag')[0];
+                    drag.hidden = true;
+                };
+                div.ondblclick = ((e) => e.stopPropagation());
+                if (innerText!==0){
+                div.innerHTML='<div>'+innerText+'</div>';
+            }
+                elem.appendChild(div);
+                div.focus();
+            }
+            function createDragDiv(elemFather) {
+                var drag = document.createElement('div');
+                var delet = document.createElement('label');
+                delet.innerHTML = '&nbsp;x&nbsp;';
+                delet.setAttribute('contenteditable', 'false');
+                delet.onclick = (e) => {
+                    var main = document.getElementsByTagName('main')[0];
+                    main.removeChild(elemFather);
+                };
+                drag.appendChild(delet);
+                drag.ondragend = (event) => {
+                    //console.log('really drag success!! '+Date());
+                    elemFather.style.top = event.pageY + 'px';
+                    elemFather.style['left'] = event.pageX + 'px';
+                };
+                drag.setAttribute('contenteditable', 'false');
+                drag.setAttribute('draggable', 'true');
+                drag.setAttribute('class', 'text-div-drag');
+                return drag;
+            }
+            function move(mto) {
+                if (curdiv === undefined || curdiv === null || curdiv.trim() === '' || mto === 'clear') {
+                    curdiv = '';
+                    return;
+                }
+                var textdiv = document.getElementById(curdiv);
+                if (mto === 'distance') {
+                    var move = document.getElementById('move');
+                    var dist = move.getElementsByTagName('input')[0];
+                    distance = Number.parseFloat(dist.value);
+                } else if (mto === 'strength') {
+                    var main = document.getElementsByTagName('main')[0];
+                    var hei = Number.parseFloat(main.style.height);
+                    if (Number.isNaN(hei)) {
+                        hei = Number.parseFloat(main.style['min-height']);
+                        if (Number.isNaN(hei)) {
+                            hei = 500;
+                        }
+                    }
+                    main.style.height = hei + distance + 'px';
+                } else if (mto === 'up') {
+                    textdiv.style.top = Number.parseFloat(textdiv.style.top) - distance + 'px';
+                } else if (mto === 'left') {
+                    textdiv.style.left = Number.parseFloat(textdiv.style.left) - distance + 'px';
+                } else if (mto === 'right') {
+                    textdiv.style.left = Number.parseFloat(textdiv.style.left) + distance + 'px';
+                } else if (mto === 'down') {
+                    textdiv.style.top = Number.parseFloat(textdiv.style.top) + distance + 'px';
+                }
+                return false;
+            }
+            function loadfile(opt) {
+                var lfile = document.getElementsByName('load_file')[0];
+                var ltext = document.getElementsByName('load_text')[0];
+                var gtext = document.getElementsByName('genr_text')[0];
+                var thtml = document.getElementsByTagName('html')[0];
+                var main = document.getElementsByTagName('main')[0];
+                var mainsubs = main.getElementsByClassName('text-div');
+                //
+                if (opt==undefined || opt.trim()===''){
+                    return ;
+                }else if ('file'===opt){
+                    //// will to read file in <input/> and load it:
+                    if (mainsubs.length > 0) {
+                        alert('function not write');
+                    var realload = window.confirm('Are you sure to give up all the current Element[class=text-div]? ');
+                }
+                if (realload) {
+                    ;
+                }
+                }else if ('text'===opt){
+                    if (mainsubs.length > 0) {
+                    var realload = window.confirm('Are you sure to give up all the current text-div? ');
+                }
+                if (realload) {
+                    divid=1;
+                    reload(ltext.value);
+                }
+                }else if ('appn'===opt){
+                    reload(ltext.value);
+                }else if ('genr'===opt){
+                    
+                    gtext.value="<!DOCTYPE html>\n" +
+"<!--\n" +
+"@since Mon Aug 24 2020 22:25:19 GMT+0800\n" +
+"@author zorrow2017\n" +
+"@ref https://github.com/jimfon/nodejsLearn\n" +
+"@description pure-html5+es6+css3-notepad-develop-VERSION1.0.0\n" +
+"-->\n"+thtml.innerHTML;
+                }else if ('genc'===opt){
+                    ;
+                }else if ('genf'===opt){
+                    alert('Javascript really can not read/write file!!');
+                }
+            }
+            function reload(text){
+                var tagStart='<main title="onlyoneidddd">',tagEnd='<span title="onlyoneidddd">';
+                var istart,iend;
+                istart=text.lastIndexOf(tagStart);
+                iend=text.lastIndexOf(tagEnd);
+                //text=text.substring(istart,iend);
+                //var divs=text.match(/<div.+?class="text-div.+?<\/label><\/div>(<br>)*<\/div>/g);
+                var divs,elem;
+                elem=document.createElement('div'); 
+                //suppose text is good:
+                elem.innerHTML=text.substring(istart,iend);
+                divs=elem.getElementsByClassName('text-div');
+                if (divs==null || divs.length===0){
+                    alert('find 0 text-div at the load_text');
+                    return ;
+                }
+                                    var main = document.getElementsByTagName('main')[0];
+//                                    var di,rt;
+                for (var ii=0;ii<divs.length;ii++){
+//                    di=document.createElement('div');
+//                    di.innerHTML=divs[ii];
+//                    rt=di.getElementsByTagName('label')[0];
+//                    di=di.getElementsByTagName('div')[0];
+var di=divs[ii];
+                    var px,py,pt;
+                    py=di.style.top;
+                    px=di.style.left;
+                    pt=di.innerHTML;
+                    createDiv(main,px,py,pt);
+                }
+            }
+        </script>
+        <style type="text/css" >
+            main{
+                margin: 10px 0 40px 1%;
+                min-height: 800px;
+                background-color: rgba(255,255,0,0.1);
+            }
+            .text-div{
+                display: inline;
+                position: absolute;
+                min-width: 3%;
+                min-height: 30px;
+                border-style: solid;
+                border-width: 1px;
+                border-color: rgba(0,0,255,0.1);
+                top: 20px;
+                left: 30%;
+            }
+/*            .main:moz-drag-over{
+                background: red;
+            }*/
+            .text-div-drag{
+                min-height: 5px;
+                height: 10px;
+                background: blue;
+                top: 0;
+                left: 0;
+            }
+            .text-div-drag label{
+                background: red;
+                display: inline-block;
+                float: right;
+                font-size: x-small;
+            }
+            .move-div{
+                display: inline-block;
+                position: fixed;
+                /*                float: right;*/
+                top: 200px;
+                margin: 0 0 0 80%;
+                border: solid 1px green;
+                padding: 3%;
+            }
+        </style>
+    </head>
+    <body onload="init()">
+        <div>mynote.html pure-html5+es6+css3-notepad-develop-VERSION1.0.0</div>
+
+        <div>
+            to load or save your note.<br>
+            <p>
+                load file: <input type="file" name="load_file"/> &nbsp; <button onclick="loadfile('file')">load file</button><br>
+                <textarea name="load_text" placeholder="to load text"></textarea>
+                <button onclick="loadfile('text')">load text</button>
+                <button onclick="loadfile('appn')">append to current note</button><br>
+                <textarea name="genr_text" placeholder="generated text"></textarea>
+                <button onclick="loadfile('genr')">generate all text-div as a text</button>
+                <button onclick="loadfile('genc')" disabled>generate and copy text</button>
+                <button onclick="loadfile('genf')" disabled>generate and save as a file</button>
+            </p>
+            <p hidden><br>
+                will to add some common writed items, such as:<br>
+                <button value="draw line">draw line</button>,then click two point at &lt;main/&gt;<br>
+            </p>
+        </div>
+        <main title="onlyoneidddd">
+            <div id="move" class="move-div">
+                move distance: <input value="50" oninput="move('distance')"/><br>
+                <button onclick="move('up')">up</button><br>
+                <button onclick="move('left')">left</button>&nbsp;
+                <button onclick="move('clear')">clear select div</button>&nbsp;
+                <button onclick="move('right')">right</button><br>
+                <button onclick="move('down')">down</button><br>
+                <button onclick="move('strength')">strength</button><br>
+            </div>
+
+        </main><span title="onlyoneidddd"></span><br>
+
+
+    </body>
+</html>
